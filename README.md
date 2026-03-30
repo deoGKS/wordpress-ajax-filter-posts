@@ -6,7 +6,7 @@ A WordPress plugin to filter posts with taxonomies terms and load more posts via
 You can add posts and filters via a **shortcode** on any page.
 
 ```
-[ajax_filter_posts post_type="recipe" tax="meal_type, food_type, diet_type"  posts_per_page="12"]
+[ajax_filter_posts post_type="recipe" tax="meal_type, food_type, diet_type"  posts_per_page="12" pagination="numbered"]
 ```
 
 This plugins uses no dependencies, is translatable and WPML ready.
@@ -39,6 +39,9 @@ This plugins uses no dependencies, is translatable and WPML ready.
 
 - **id**
   Usefull for custom styling or to target specific instances of the shortcode in the filter hooks. Default not set.
+
+- **pagination**
+  Pagination Style. Default `load more`.
 
 ## Overwriting template files
 
