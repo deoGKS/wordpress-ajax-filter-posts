@@ -54,6 +54,7 @@ class Ajax_Filter_Posts {
     'orderby'        => 'date',
     'tax'            => 'post_tag',
     'multiselect'    => 'true',
+    'pagination'     => 'load more', // options: numbered, or load more.
   );
 
   /**
@@ -323,6 +324,7 @@ class Ajax_Filter_Posts {
       'order'       => $_POST['params']['order'],
       'quantity'    => intval($_POST['params']['quantity']),
       'language'    => sanitize_text_field($_POST['params']['language']),
+      'pagination'  => sanitize_text_field( $_POST['params']['pagination'] ), // Added.
     );
 
     // Abort on false attributes

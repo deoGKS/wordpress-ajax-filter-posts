@@ -44,6 +44,12 @@
           return true;
       });
 
+      on(container, 'click', 'a.page-numbers.js-load-mores-x', function(event) {
+          handleNextEvent(event.target);
+          event.preventDefault();
+          return true;
+      });
+
       // Add event listner on all filter toggle buttons
       [].slice.call(filterTogglers).forEach(function(button){
         button.addEventListener('click', toggleFilters)
@@ -60,6 +66,7 @@
       'tax'  : {},
       'quantity': parseInt(container.dataset.quantity, 10) || 0,
       'postType': container.dataset.postType || 'post',
+      'pagination': container.dataset.pager || 'load more',
       'postStatus': container.dataset.postStatus || 'publish',
       'orderby':  container.dataset.orderby || 'date',
       'order':  container.dataset.order || 'DESC',
@@ -113,6 +120,18 @@
   function handleLoadMoreEvent(button){
     updateQueryParams({ page: parseInt(button.dataset.page, 10) })
     getAJAXPosts({reset: false});
+  }
+
+    /**
+   * Display next page of posts
+   *
+   * @param  NodeElement  link  Clicked load more button
+   */
+  function handleNextEvent(link){
+	var url          = link.href
+	var pagedValue = url.split( "?paged=" )
+	updateQueryParams( { page: parseInt( pagedValue[1], 10 ) } )
+	getAJAXPosts({reset: false});
   }
 
   /**
@@ -210,7 +229,7 @@
     request.timeout = 4000; // time in milliseconds
 
     request.onload = function() {
-
+      var pager = queryParams.pagination;
       //remove load more button
       var loadMoreButton = content.querySelector('.js-load-more');
       if (loadMoreButton) {
@@ -223,11 +242,16 @@
           // Hide error status button
           hideResponseMessage();
           // If we have to remove the show more button
-          if (args.reset) {
-            content.innerHTML = response.data.content;
-          } else {
-            content.innerHTML += response.data.content;
-          }
+          // Check specified pagination style from pager variable.
+            if ( pager === 'load more') {
+                if (args.reset) {
+                    content.innerHTML = response.data.content;
+                } else {
+                    content.innerHTML += response.data.content;
+                }
+            } else {
+                content.innerHTML = response.data.content;
+            }
         } else {
           status.innerHTML = response.data;
           showResponseMessage();

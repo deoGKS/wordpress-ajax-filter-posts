@@ -7,6 +7,7 @@
   data-post-type="<?= esc_html( implode(',', $attributes['post_type'] ) ); ?>"
   data-post-status="<?= esc_html( implode(',', $attributes['post_status'] ) ); ?>"
   data-quantity="<?= esc_html( $attributes['posts_per_page'] ); ?>"
+  data-pager="<?php echo esc_html( $attributes['pagination'] ); ?>"
   data-multiselect="<?= esc_html( $attributes['multiselect'] ); ?>"
   data-orderby="<?= esc_html( $attributes['orderby'] ); ?>"
   data-order="<?= esc_html( $attributes['order'] ); ?>"
